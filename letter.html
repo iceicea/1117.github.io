@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>letter</title>
+    <style>* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d9afd9;
+background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
+}
+
+.card {
+    width: 700px;
+    height: 300px;
+    background-color: #f5efe6;
+    color: #334756;
+    box-shadow: 0px 0px 22px 5px rgb(237, 237, 237);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2.5em;
+    font-family: '楷体';
+    position: relative;
+    /* 使盒子具备透视效果 */
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(23deg);
+}
+.card::before,
+.card::after {
+    content: '';
+    width: 50%;
+    height: 100%;
+    color: #b7c4cf;
+    font-size: 40px;
+    position: absolute;
+    font-family: '华文行楷';
+
+}
+.card::before {
+    content: '写给你的';
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    transition: 2s;
+    transform-origin: left;
+}
+.card::after {
+    content: '一封书信';
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform-origin: right;
+    transition: 2s;
+
+}
+
+.card:hover::before {
+    transform: rotateY(-180deg);
+}
+.card:hover::after {
+    transform: rotateY(180deg);
+}
+.content {
+    opacity: 0;
+    transition: 2s;
+}
+.card:hover .content {
+    opacity: 1;
+}
+/* 心动效果 */
+/* 因为写动画太琐碎了 所以偷个懒 这里就不再写了 */
+@keyframes change {
+    30% {
+      transform: rotate(45deg) scale(1.1) translateX(-70%);
+    }
+    40% {
+      transform: rotate(45deg) scale(1.3) translateX(-70%);
+    }
+    45% {
+      transform: rotate(45deg) scale(0.9) translateX(-70%);
+    }
+    50% {
+      transform: rotate(45deg) scale(0.5) translateX(-70%);
+    }
+    70% {
+      transform: rotate(45deg) scale(1) translateX(-70%);
+    }
+    80% {
+      transform: rotate(45deg) scale(1.5) translateX(-70%);
+    }
+    90% {
+      transform: rotate(45deg) scale(0.7) translateX(-70%);
+    }
+    95% {
+      transform: rotate(45deg) scale(1.5) translateX(-70%);
+    }
+    100% {
+      transform: rotate(45deg) scale(1.1) translateX(-70%);
+    }
+  } 
+  /* cv工程师 嘿嘿嘿 */
+  .heart {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    /* pink yyds */
+    background-color: pink;
+    /* 往右下脚偏一些 */
+    transform: rotate(45deg) translateX(-70%);
+    /* 给这个爱心绑定动画 */
+    /* 动画的名字 */
+    animation-name: change;
+    /* 动画持续时间 */
+    animation-duration: 2.7s;
+    /* 无限次播放动画 永远对你心动 */
+    animation-iteration-count: infinite;
+    cursor: pointer;
+
+
+  }
+/* 画爱心桃 */
+.heart::before {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: pink;
+    position: absolute;
+    transform: translateX(-25px);
+
+}
+.heart::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: pink;
+    position: absolute;
+    transform: translateY(-25px);
+}
+/* 中间的字体样式有点丑  调一下 */
+.text {
+    color: #7D6E83;
+    margin-top: 45px;
+    font-family: '华文行楷';
+}
+.textTwo {
+    color: #7D6E83;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 30px;
+}
+/* 神秘的box */
+#box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -200;
+    opacity: 0;
+    color: #00ffd1;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 13vh;
+    width: 90vw;
+    height: 87vh;
+    text-align: center;
+    background-image: url(bac.jpg);
+    overflow: hidden;
+    background-size: cover;
+    font-size: 25px;
+    font-family: '华文行楷';
+    transition: opacity 7s;
+}
+ </style>
+</head>
+<body>
+<div class="card">
+    <div class="text content">
+        i love you
+    </div>
+    <div class="textTwo content">
+        Can you touch my heart
+    </div>
+    <div class="heart content"></div>
+</div>
+
+<div id="box">
+
+</div>
+<script >
+  let heart = document.querySelector(".heart");
+let card = document.querySelector(".card");
+let box = document.querySelector("#box");
+heart.addEventListener("click", function () {
+  card.setAttribute("style", "opacity:0");
+  let x = document.createElement("audio");
+  x.setAttribute("src", "mu.mp3");
+  x.setAttribute("autoplay", "autoplay");
+
+  // 打字效果
+  let i = 0;
+  // let str = '写信真是一件温柔的事，细腻的小心思就藏在横竖撇捺之中，像是一只温顺的小兽<躲在情意绵绵的字里行间，被火燎封印起来，等着解封的那一刻窜出来，跳进启信人眼底的柔波里。<你一眨眼，<温驯的小鹿有跳动一下，<柔软的暖风有轻拂一下，<遥远的星星有闪烁一下，<我也有心动<却不止一下'
+  let str = "我喜欢你<第一行是假的<第二行也是假的";
+  let strp = "";
+
+  function print() {
+    if (str[i] == "<") {
+      document.getElementById("box").innerHTML = strp + "<br><br>+'|'";
+      strp += "<br><br>";
+    } else {
+      strp += str[i];
+      box.innerHTML = strp + "|";
+    }
+    i++;
+  }
+  setTimeout(() => {
+    let printid = setInterval(() => {
+      print();
+      if (i == str.length) clearInterval(printid);
+    }, 190); // 190毫秒打一个字，其实细心发现的话，这个项目还是有个小小的bug，无法用语言描述这个bug，如果你想优化的话 有一种简单的方法就是调快打字的速度，这样那个bug看起来就不会很明显,我太菜了 不会改那个bug
+  }, 5500); //5500毫秒开始打字
+  // 背景出现
+  function appearBackground() {
+    setTimeout(() => {
+      box.style.opacity = 1;
+    }, 1500);
+  }
+  appearBackground();
+});
+
+</script>
+</body>
+</html>
